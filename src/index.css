@@ -15,3 +15,12 @@ code {
 *::after {
    box-sizing: border-box;
 }
+
+.table-bordered > :not(caption) > * > * {
+   border-width: 1px 0;
+   width: auto;
+}
+
+.col {
+   color: white;
+}
