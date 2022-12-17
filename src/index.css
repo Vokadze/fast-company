@@ -9,18 +9,3 @@ body {
 code {
    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
-
-*,
-*::before,
-*::after {
-   box-sizing: border-box;
-}
-
-.table-bordered > :not(caption) > * > * {
-   border-width: 1px 0;
-   width: auto;
-}
-
-.col {
-   color: white;
-}
