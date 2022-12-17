@@ -16,7 +16,6 @@ const Users = () => {
       return "человек тусанет";
    };
 
-
    //const handleDelete = (userId) => {
 
    //   users.filter((userId, index) => {
