@@ -1,29 +1,22 @@
 import React, { useState } from 'react'
-import User from '../components/user';
-//import Qualitie from "../components/qualitie";
-
+import User from '../components/user'
+import SeachStatus from '../components/seachStatus'
 
 import api from '../api'
 
+const Users = () => {
+   const [users, setUsers] = useState(api.users.fetchAll())
 
-const Users = (props) => {
-   console.log(props);
-   const [users, setUsers] = useState(api.users.fetchAll());
-
-   //const handleDelete = (userId) => {
-   //   setUsers(users.filter((user) => user._id !== userId));
-   //};
-
-   //const renderPhrase = (number) => {
-   //   const lastOne = Number(number.toString().slice(-1));
-   //   if (number > 4 && number < 15) return "человек тусанет";
-   //   if ([2, 3, 4].indexOf(lastOne) >= 0) return "человека тусанут";
-   //   if (lastOne === 1) return "человек тусанет";
-   //   return "человек тусанет";
-   //};
+   const handleDelete = (userId) => {
+      setUsers(users.filter((user) => user._id !== userId));
+   };
 
    return (
       <>
+         <h2>
+            <SeachStatus length={users.length} />
+         </h2>
+
          {users.length > 0 && (
             <table className="table">
                <thead>
@@ -37,12 +30,14 @@ const Users = (props) => {
                   </tr>
                </thead>
                <tbody>
-                  {User() }
+                  {users.map((user) => (
+                     <User user={user} handleDelete={handleDelete} />
+                  ))}
                </tbody>
             </table>
          )}
       </>
-   );
-};
+   )
+}
 
 export default Users
