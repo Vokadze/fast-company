@@ -1,5 +1,6 @@
 import React from "react";
 import Qualitie from "../components/qualitie";
+import Bookmark from "../components/bookmark"
 
 const User = ({ user, handleDelete }) => {
 
@@ -15,6 +16,11 @@ const User = ({ user, handleDelete }) => {
             <td>{user.profession.name}</td>
             <td>{user.completedMeetings}</td>
             <td>{user.rate} /5</td>
+            <td>
+               <span>
+                  <Bookmark status={Bookmark.status} />
+               </span>
+            </td>
             <td>
                <button
                   onClick={() => handleDelete(user._id)}
