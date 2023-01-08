@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import User from '../components/user'
 import SeachStatus from '../components/seachStatus'
-import Bookmark from '../components/bookmark'
+import BookMark from '../components/bookmark'
 
 import api from '../api'
 
@@ -12,10 +12,10 @@ const Users = () => {
       setUsers(users.filter((user) => user._id !== userId));
    };
 
-   const [markers, setMarkers] = useState([Bookmark.markers])
-   console.log(markers);
-   const handeleToggleBookMark = () => {
-      setMarkers([Bookmark.markers.id])
+   const [markers, setMarkers] = useState(BookMark.return)
+   const handeleToggleBookMark = (id) => {
+      setMarkers(prevState => prevState.filter((marker) => marker !== id))
+      //console.log('id', id);
    }
 
    return (
@@ -42,7 +42,10 @@ const Users = () => {
                      <User
                         user={user}
                         handleDelete={handleDelete}
-                        onClick={() => handeleToggleBookMark}
+                        key={user._id}
+                        keyicon={markers}
+                        status={BookMark.status}
+                        onClick={handeleToggleBookMark}
                      />
                   ))}
                </tbody>

@@ -1,8 +1,8 @@
 import React from "react";
 import Qualitie from "../components/qualitie";
-import Bookmark from "../components/bookmark"
+import BookMark from "../components/bookmark"
 
-const User = ({ user, handleDelete }) => {
+const User = ({ user, handleDelete, handeleToggleBookMark, id, marker, ...rest }) => {
 
    return (
       <>
@@ -17,9 +17,17 @@ const User = ({ user, handleDelete }) => {
             <td>{user.completedMeetings}</td>
             <td>{user.rate} /5</td>
             <td>
-               <span>
-                  <Bookmark status={Bookmark.status} />
-               </span>
+               <button
+                  keyicon={marker}
+                  //status={BookMark.status}
+                  onClick={() => handeleToggleBookMark()}
+                  className="btn btn-ligth border-dark m-1 p-1">
+                  <BookMark
+                     //key={BookMark.id}
+                     status={BookMark.status}
+                  //onClick={() => handeleToggleBookMark()}
+                  />
+               </button>
             </td>
             <td>
                <button
