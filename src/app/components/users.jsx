@@ -20,12 +20,12 @@ const Users = () => {
       </svg>]
    ]
 
-   //const [iconses, setIconses] = useState([icons])
-   //console.log(iconses);
+   const [iconses, setIconses] = useState([icons])
+   console.log(iconses);
 
-   //const handleToggleBookMark = (id) => {
-   //   setIconses(icons.filter((icon) => icon.id === id))
-   //}
+   const handleToggleBookMark = (id) => {
+      setIconses(icons.filter((icon) => icon.id === id))
+   }
 
    return (
       <>
@@ -52,11 +52,11 @@ const Users = () => {
                         user={user}
                         handleDelete={handleDelete}
                         key={user._id}
-                     //keyicons={icons}
-                     //keysicon={icon}
-                     //status={BookMark.status}
-                     //handleToggleBookMark={handleToggleBookMark}
-                     //handleToggleBookMark={handleToggleBookMark}
+                        keyicons={icons}
+                        //keysicon={icon}
+                        //status={BookMark.status}
+                        //handleToggleBookMark={handleToggleBookMark}
+                        handleToggleBookMark={handleToggleBookMark}
                      />
 
                   ))}
