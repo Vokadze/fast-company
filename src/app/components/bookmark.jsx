@@ -2,10 +2,17 @@ import React from "react";
 
 const BookMark = ({ status, ...rest }) => {
 
-   //const nextStatus = status ? '-heart-fill' : ''
+   let updateBookmark = status ? '-heart-fill' : ''
 
-   return !status ? <i id="0" className="bi bi-bookmark"></i> : <i id="1" className="bi bi-bookmark-heart-fill"></i>
-
+   return <button className="btn btn-ligth border-dark m-1 p-1" >
+      {status = <i className="bi bi-bookmark" {...rest}></i>
+         ? <i className={`bi bi-bookmark${updateBookmark}`} {...rest}></i>
+         : <i className="bi bi-bookmark" {...rest}></i>}
+   </button>
 }
 
 export default BookMark
+
+/*
+{status = <i className={`bi bi-bookmark${updateBookmark}`} onClick={() => handleToggleBookMark()} {...rest}></i>}
+*/
