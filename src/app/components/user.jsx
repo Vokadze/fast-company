@@ -1,7 +1,8 @@
 import React from "react";
 import Qualitie from "../components/qualitie";
+import BookMark from "./bookmark";
 
-const User = ({ user, users, handleDelete, ...rest }) => {
+const User = ({ user, users, handleDelete, bookmark, handleToggleBookMark, ...rest }) => {
 
    return (
       <>
@@ -16,7 +17,10 @@ const User = ({ user, users, handleDelete, ...rest }) => {
             <td>{user.completedMeetings}</td>
             <td>{user.rate} /5</td>
             <td>
-
+               <BookMark
+                  bookmark={bookmark}
+                  handleToggleBookMark={handleToggleBookMark}
+               />
             </td>
             <td>
                <button

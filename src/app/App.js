@@ -10,18 +10,6 @@ function App() {
     setUsers(users.filter((user) => user._id !== userId))
   }
 
-  // const [marker, setMarker] = useState(users.icons[0])
-  // console.log(marker)
-
-  //  const handleToggleBookMark = (id) => {
-  //    console.log(id)
-  //    const updateBookmark = users.icons.map((icon) => {
-  //      return icon.id === id ? { ...icon, bookmark: !icon.bookmark } : icon
-  //    })
-
-  //    users.setMarker(updateBookmark)
-  //  }
-
   return (
     <>
       <div>
@@ -31,12 +19,6 @@ function App() {
         <Users
           handleDelete={handleDelete}
               usersArr={users}
-            //  iconArr={icons}
-          // iconsArr={users.icons}
-          // status={BookMark.status}
-          // keyboomark={users.boomark}
-          // keymark={id}
-          // handleToggleBookMark={handleToggleBookMark}
         />
       </div>
     </>
