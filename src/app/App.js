@@ -42,7 +42,6 @@ function App() {
                 user={user}
                 handleDelete={handleDelete}
                 key={user._id}
-                bookmark={user.bookmark}
                 handleToggleBookMark={handleToggleBookMark}
               />
             ))}

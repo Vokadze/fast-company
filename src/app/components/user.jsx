@@ -18,7 +18,7 @@ const User = ({ user, users, handleDelete, bookmark, handleToggleBookMark, ...re
             <td>{user.rate} /5</td>
             <td>
                <BookMark
-                  bookmark={bookmark}
+                  bookmark={user.bookmark}
                   handleToggleBookMark={handleToggleBookMark}
                />
             </td>
