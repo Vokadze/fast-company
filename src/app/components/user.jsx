@@ -36,6 +36,4 @@ const User = ({ user, users, handleDelete, bookmark, handleToggleBookMark, ...re
    )
 }
 
-
-
 export default User

@@ -22,7 +22,4 @@ const SeachStatus = ({ length }) => {
    )
 }
 
-
-
-
 export default SeachStatus
