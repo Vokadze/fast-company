@@ -1,9 +1,8 @@
-import React from "react";
-import Qualitie from "../components/qualitie";
-import BookMark from "./bookmark";
+import React from 'react'
+import Qualitie from './qualitie'
+import BookMark from './bookmark'
 
-const User = ({ user, users, handleDelete, bookmark, handleToggleBookMark, ...rest }) => {
-
+const User = ({ user, users, _id, id, name, qualities, profession, completedMeetings, rate, handleDelete, handleToggleBookMark, bookmark, ...rest }) => {
    return (
       <>
          <tr key={user._id}>
@@ -24,8 +23,8 @@ const User = ({ user, users, handleDelete, bookmark, handleToggleBookMark, ...re
             </td>
             <td>
                <button
+                  className={"btn btn-danger"}
                   onClick={() => handleDelete(user._id)}
-                  className="btn btn-danger"
                   {...rest}
                >
                   Удалить

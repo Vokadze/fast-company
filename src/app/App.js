@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Users from './components/user'
+import Users from './components/users'
 import SeachStatus from './components/seachStatus'
 import api from './api'
 
@@ -11,14 +11,17 @@ function App() {
   }
 
   const handleToggleBookMark = (id) => {
+    console.log(id)
     const updateBookmark = users.map((user) => {
-      return user._id !== id ? { ...user, bookmark: !user.bookmark } : user
+      return user._id !== id
+        ? { ...user, bookmark: !user.bookmark }
+        : !user.bookmark
     })
     setUsers(updateBookmark)
   }
 
   return (
-    <>
+    <div>
       <h2>
         <SeachStatus length={users.length} />
       </h2>
@@ -48,7 +51,7 @@ function App() {
           </tbody>
         </table>
       )}
-    </>
+    </div>
   )
 }
 
