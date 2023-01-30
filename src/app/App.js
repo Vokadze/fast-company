@@ -13,9 +13,7 @@ function App() {
   const handleToggleBookMark = (id) => {
     console.log(id)
     const updateBookmark = users.map((user) => {
-      return user._id !== id
-        ? { ...user, bookmark: !user.bookmark }
-        : !user.bookmark
+      return user._id === id ? { ...user, bookmark: !user.bookmark } : user
     })
     setUsers(updateBookmark)
   }
