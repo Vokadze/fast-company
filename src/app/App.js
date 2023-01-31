@@ -24,7 +24,7 @@ function App() {
    <div>
      <SeachStatus length={users.length}/>
      <Users
-       onDelete={handleDelete}
+       handleDelete={handleDelete}
        onToggleBookMark={handleToggleBookMark}
        users={users}
      />
