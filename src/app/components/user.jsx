@@ -49,7 +49,7 @@ User.propTypes = {
     _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     qualities: PropTypes.array,
-    profession: PropTypes.object.isRequired,
+    profession: PropTypes.object,
     completedMeetings: PropTypes.number.isRequired,
     rate: PropTypes.number.isRequired,
     handleDelete: PropTypes.func.isRequired,
