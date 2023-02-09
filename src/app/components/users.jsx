@@ -14,8 +14,10 @@ const Users = ({ ...rest }) => {
 
     const pageSize = 2;
     useEffect(() => {
-        api.professions.fetchAll().then((data) => setProfessions(data));
-        api.users.fetchAll().then((data) => setUsers(data));
+        setTimeout(() => {
+            api.professions.fetchAll().then((data) => setProfessions(data));
+            api.users.fetchAll().then((data) => setUsers(data));
+        });
     }, []);
     useEffect(() => {
         setCurrentPage(1);
@@ -86,7 +88,13 @@ const Users = ({ ...rest }) => {
                         </thead>
                         <tbody>
                             {userCrop.map((user) => (
-                                <User {...rest} {...user} key={user._id} />
+                                <User
+                                    {...rest}
+                                    {...user}
+                                    key={user._id}
+                                    handleDelete={handleDelete}
+                                    handleToggleBookMark={handleToggleBookMark}
+                                />
                             ))}
                         </tbody>
                     </table>
@@ -97,8 +105,6 @@ const Users = ({ ...rest }) => {
                         pageSize={pageSize}
                         currentPage={currentPage}
                         onPageChange={handlePageChange}
-                        handleDelete={handleDelete}
-                        handleToggleBookMark={handleToggleBookMark}
                     />
                 </div>
             </div>
