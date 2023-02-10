@@ -14,10 +14,8 @@ const Users = ({ ...rest }) => {
 
     const pageSize = 2;
     useEffect(() => {
-        setTimeout(() => {
-            api.professions.fetchAll().then((data) => setProfessions(data));
-            api.users.fetchAll().then((data) => setUsers(data));
-        });
+        api.professions.fetchAll().then((data) => setProfessions(data));
+        api.users.fetchAll().then((data) => setUsers(data));
     }, []);
     useEffect(() => {
         setCurrentPage(1);
