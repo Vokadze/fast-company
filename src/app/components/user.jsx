@@ -12,7 +12,7 @@ const User = ({
     rate,
     handleDelete,
     bookmark,
-    handleToggleBookMark
+    onToggleBookMark
 }) => {
     return (
         <>
@@ -29,7 +29,7 @@ const User = ({
                 <td>
                     <BookMark
                         status={bookmark}
-                        onClick={() => handleToggleBookMark(_id)}
+                        onClick={() => onToggleBookMark(_id)}
                     />
                 </td>
                 <td>
@@ -54,7 +54,7 @@ User.propTypes = {
     rate: PropTypes.number.isRequired,
     handleDelete: PropTypes.func.isRequired,
     bookmark: PropTypes.bool,
-    handleToggleBookMark: PropTypes.func
+    onToggleBookMark: PropTypes.func
 };
 
 export default User;

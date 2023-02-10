@@ -6,36 +6,18 @@ import User from "./user";
 import api from "../api";
 import GroupList from "./groupList";
 import SeachStatus from "./seachStatus";
-const Users = ({ ...rest }) => {
+const Users = ({ users: allUsers, ...rest }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfessions] = useState();
-    const [users, setUsers] = useState([]);
     const [selectedProf, setSelectedProf] = useState();
 
     const pageSize = 2;
     useEffect(() => {
         api.professions.fetchAll().then((data) => setProfessions(data));
-        api.users.fetchAll().then((data) => setUsers(data));
     }, []);
     useEffect(() => {
         setCurrentPage(1);
     }, [selectedProf]);
-
-    const handleDelete = (userId) => {
-        setUsers(users.filter((user) => user._id !== userId));
-    };
-
-    const handleToggleBookMark = (id) => {
-        setUsers(
-            users.map((user) => {
-                if (user._id === id) {
-                    return { ...user, bookmark: !user.bookmark };
-                }
-                return user;
-            })
-        );
-        console.log(id);
-    };
 
     const handelProfessionSelect = (item) => {
         setSelectedProf(item);
@@ -45,8 +27,13 @@ const Users = ({ ...rest }) => {
         console.log("page: ", pageIndex);
     };
     const filteredUsers = selectedProf
-        ? users.filter((user) => user.profession._id === selectedProf._id)
-        : users;
+        ? allUsers.filter(
+              (user) =>
+                  JSON.stringify(user.profession) ===
+                  JSON.stringify(selectedProf)
+          )
+        : allUsers;
+
     const count = filteredUsers.length;
     const userCrop = paginate(filteredUsers, currentPage, pageSize);
     const clearFilter = () => {
@@ -86,13 +73,7 @@ const Users = ({ ...rest }) => {
                         </thead>
                         <tbody>
                             {userCrop.map((user) => (
-                                <User
-                                    {...rest}
-                                    {...user}
-                                    key={user._id}
-                                    handleDelete={handleDelete}
-                                    handleToggleBookMark={handleToggleBookMark}
-                                />
+                                <User {...rest} {...user} key={user._id} />
                             ))}
                         </tbody>
                     </table>
@@ -111,7 +92,7 @@ const Users = ({ ...rest }) => {
 };
 
 Users.propTypes = {
-    users: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
+    users: PropTypes.array
 };
 
 export default Users;
