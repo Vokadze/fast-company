@@ -111,7 +111,7 @@ const Users = ({ ...rest }) => {
 };
 
 Users.propTypes = {
-    users: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
+    users: PropTypes.array
 };
 
 export default Users;
