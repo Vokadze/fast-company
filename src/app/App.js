@@ -15,12 +15,12 @@ function App() {
                 <Route path="/login" component={Login} />
                 <Route
                     path="/users/:userId"
-                    render={(props) => <UsersList {...props} />}
+                    render={(props) => <UsersList users={Users} {...props} />}
                 />
                 <Route
                     path="/users"
                     exact
-                    render={(props) => <Users {...props} />}
+                    render={(props) => <Users users={Users} {...props} />}
                 />
             </Switch>
         </>
