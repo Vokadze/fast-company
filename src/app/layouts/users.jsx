@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { paginate } from "../utils/paginate";
-import Pagination from "./pagination";
+import Pagination from "../components/pagination";
 import api from "../api";
-import GroupList from "./groupList";
-import SeachStatus from "./seachStatus";
-import UsersTatle from "./usersTable";
+import GroupList from "../components/groupList";
+import SeachStatus from "../components/seachStatus";
+import UsersTable from "../components/usersTable";
 import _ from "lodash";
 const Users = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -70,51 +70,53 @@ const Users = () => {
             setSelectedProf();
         };
         return (
-            <div className="d-flex">
-                {professions && (
-                    <div className="d-flex flex-column flex-shrink-0 p-3">
-                        <GroupList
-                            selectedItem={selectedProf}
-                            items={professions}
-                            onItemSelect={handelProfessionSelect}
-                        />
-                        <button
-                            className="btn btn-secondary mt-2"
-                            onClick={clearFilter}
-                        >
-                            {" "}
-                            Очистить
-                        </button>
-                    </div>
-                )}
-                <div className="d-flex flex-column">
-                    <SeachStatus length={count} />
-                    {count > 0 && (
-                        <UsersTatle
-                            users={userCrop}
-                            onSort={handleSort}
-                            selectedSort={sortBy}
-                            handleDelete={handleDelete}
-                            onToggleBookMark={handleToggleBookMark}
-                        />
+            <>
+                <div className="d-flex">
+                    {professions && (
+                        <div className="d-flex flex-column flex-shrink-0 p-3">
+                            <GroupList
+                                selectedItem={selectedProf}
+                                items={professions}
+                                onItemSelect={handelProfessionSelect}
+                            />
+                            <button
+                                className="btn btn-secondary mt-2"
+                                onClick={clearFilter}
+                            >
+                                {" "}
+                                Очистить
+                            </button>
+                        </div>
                     )}
-                    <div className="d-flex justify-content-center">
-                        <Pagination
-                            itemsCount={count}
-                            pageSize={pageSize}
-                            currentPage={currentPage}
-                            onPageChange={handlePageChange}
-                        />
+                    <div className="d-flex flex-column">
+                        <SeachStatus length={count} />
+                        {count > 0 && (
+                            <UsersTable
+                                users={userCrop}
+                                onSort={handleSort}
+                                selectedSort={sortBy}
+                                handleDelete={handleDelete}
+                                onToggleBookMark={handleToggleBookMark}
+                            />
+                        )}
+                        <div className="d-flex justify-content-center">
+                            <Pagination
+                                itemsCount={count}
+                                pageSize={pageSize}
+                                currentPage={currentPage}
+                                onPageChange={handlePageChange}
+                            />
+                        </div>
                     </div>
                 </div>
-            </div>
+            </>
         );
     }
     return "Loading...";
 };
 
 Users.propTypes = {
-    users: PropTypes.array
+    users: PropTypes.func
 };
 
 export default Users;
