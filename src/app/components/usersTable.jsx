@@ -1,18 +1,19 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import TableHeader from "./tableHeader";
 import TableBody from "./tableBody";
 import BookMark from "./bookmark";
 import QualitiesList from "./qualitiesList";
 import Table from "./table";
-import { Link } from "react-router-dom";
 
-const UsersTatle = ({
+const UsersTable = ({
     users,
     onSort,
     selectedSort,
     onToggleBookMark,
     handleDelete,
+    _id,
     ...rest
 }) => {
     const columns = {
@@ -67,12 +68,13 @@ const UsersTatle = ({
     );
 };
 
-UsersTatle.propTypes = {
+UsersTable.propTypes = {
     users: PropTypes.array.isRequired,
     onSort: PropTypes.func.isRequired,
     selectedSort: PropTypes.object.isRequired,
     onToggleBookMark: PropTypes.func.isRequired,
-    handleDelete: PropTypes.func.isRequired
+    handleDelete: PropTypes.func.isRequired,
+    _id: PropTypes.string
 };
 
-export default UsersTatle;
+export default UsersTable;
