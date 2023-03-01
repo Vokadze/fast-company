@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-const TextField = ({ label, type, name, value, onChange, error }) => {
+const TextField = ({
+    label,
+    type,
+    name,
+    value,
+    onChange,
+    error,
+    placeholder
+}) => {
     const [showPassword, setShowPassword] = useState(false);
     const getInputClasses = () => {
         return "form-control" + (error ? " is-invalid" : "");
@@ -19,6 +27,7 @@ const TextField = ({ label, type, name, value, onChange, error }) => {
                     name={name}
                     value={value}
                     onChange={onChange}
+                    placeholder={placeholder}
                     className={getInputClasses()}
                 />
                 {type === "password" && (
@@ -27,10 +36,14 @@ const TextField = ({ label, type, name, value, onChange, error }) => {
                         type="button"
                         onClick={toggleShowPassword}
                     >
-                        <i className={"bi bi-eye" + (showPassword ? "-slash" : "")}></i>
+                        <i
+                            className={
+                                "bi bi-eye" + (showPassword ? "-slash" : "")
+                            }
+                        ></i>
                     </button>
                 )}
-            {error && <div className="invalid-feedback">{error}</div>}
+                {error && <div className="invalid-feedback">{error}</div>}
             </div>
         </div>
     );
@@ -41,12 +54,13 @@ TextField.defaultProps = {
 };
 
 TextField.propTypes = {
-    label: PropTypes.string.isRequired,
+    label: PropTypes.string,
     type: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
+    name: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
     onChange: PropTypes.func.isRequired,
-    error: PropTypes.string
+    error: PropTypes.string,
+    placeholder: PropTypes.string.isRequired
 };
 
 export default TextField;
