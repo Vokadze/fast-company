@@ -25,8 +25,10 @@ const UsersList = () => {
     };
 
     const handleChange = ({ target }) => {
-         setData((prevState) => ({ ...prevState, [target.name]: target.value }));
-        // setData({ name: [target.name], value: [target.value] });
+        const changeNameInput = users.filter(
+            (user) => user.name === target.value
+        );
+        setData({ name: changeNameInput, value: target.value });
     };
 
     const handleToggleBookMark = (id) => {
@@ -97,8 +99,8 @@ const UsersList = () => {
                 <div className="d-flex flex-column">
                     <SeachStatus length={count} />
                     <TextField
-                        name={data.name}
                         value={data.value}
+                        name={data.value}
                         onChange={handleChange}
                         placeholder="Имя..."
                     />
