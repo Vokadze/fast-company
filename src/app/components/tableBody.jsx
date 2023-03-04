@@ -28,7 +28,7 @@ const TableBody = ({ data, columns }) => {
 };
 
 TableBody.propTypes = {
-    data: PropTypes.array.isRequired,
+    data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
     columns: PropTypes.object.isRequired
 };
 

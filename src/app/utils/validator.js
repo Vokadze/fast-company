@@ -25,6 +25,11 @@ export function validator(data, config) {
                 statusValidate = data.length < config.value;
                 break;
             }
+            // case "isName": {
+            //    const nameRegExp = /[^abc]+\s[^abc]+/g;
+            //    statusValidate = nameRegExp.test(data);
+            //    break;
+            // }
             default:
                 break;
         }

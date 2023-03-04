@@ -20,7 +20,7 @@ Table.propTypes = {
     onSort: PropTypes.func,
     selectedSort: PropTypes.object,
     columns: PropTypes.object,
-    data: PropTypes.array,
+    data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
     children: PropTypes.array
 };
 

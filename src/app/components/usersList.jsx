@@ -7,28 +7,23 @@ import GroupList from "./groupList";
 import SeachStatus from "./seachStatus";
 import UsersTable from "../components/usersTable";
 import _ from "lodash";
-import TextField from "./testField";
+import TestInput from "./testInput";
+import { validator } from "../utils/validator";
 const UsersList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfessions] = useState();
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
-    const [data, setData] = useState({ name: "", value: "" });
+    const [users, setUsers] = useState();
+    const [data, setData] = useState({ name: "" });
+    const [errors, setErrors] = useState({});
     const pageSize = 8;
 
-    const [users, setUsers] = useState();
     useEffect(() => {
         api.users.fetchAll().then((data) => setUsers(data));
     }, []);
     const handleDelete = (userId) => {
         setUsers(users.filter((user) => user._id !== userId));
-    };
-
-    const handleChange = ({ target }) => {
-        const changeNameInput = users.filter(
-            (user) => user.name === target.value
-        );
-        setData({ name: changeNameInput, value: target.value });
     };
 
     const handleToggleBookMark = (id) => {
@@ -59,13 +54,45 @@ const UsersList = () => {
         setSortBy(item);
     };
 
+    const handleChange = ({ target }) => {
+        setData((prevState) => ({
+            ...prevState,
+            [target.name]: target.value
+        }));
+    };
+    const validatorConfig = {
+        name: {
+            isRequired: {
+                message: "Имя обязательно для заполнения"
+            },
+            isName: {
+                message: "Введеное имя не существует в списке"
+            }
+        }
+    };
+    useEffect(() => {
+        validate();
+    }, [data, users]);
+    const validate = () => {
+        const errors = validator(data, validatorConfig);
+        setErrors(errors);
+        return Object.keys(errors).length === 0;
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const isValid = validate();
+        if (!isValid) return;
+        console.log(data);
+    };
+
     if (users) {
         const filteredUsers = selectedProf
             ? users.filter(
-                  (user) =>
-                      JSON.stringify(user.profession) ===
-                      JSON.stringify(selectedProf)
-              )
+                (user) =>
+                    JSON.stringify(user.profession) ===
+                    JSON.stringify(selectedProf)
+            )
             : users;
 
         const count = filteredUsers.length;
@@ -78,6 +105,7 @@ const UsersList = () => {
         const clearFilter = () => {
             setSelectedProf();
         };
+
         return (
             <div className="d-flex">
                 {professions && (
@@ -98,15 +126,25 @@ const UsersList = () => {
                 )}
                 <div className="d-flex flex-column">
                     <SeachStatus length={count} />
-                    <TextField
-                        value={data.value}
-                        name={data.value}
-                        onChange={handleChange}
-                        placeholder="Имя..."
-                    />
+                    <form onSubmit={handleSubmit}>
+                        <TestInput
+                            className="form-control"
+                            placeholder="Имя..."
+                            name="name"
+                            value={data.value}
+                            onChange={handleChange}
+                            error={errors.name}
+                        />
+                    </form>
                     {count > 0 && (
                         <UsersTable
-                            users={userCrop}
+                            users={userCrop &&
+                                (users
+                                    ? users.filter(
+                                        (user) => user.name === data.name
+                                    )
+                                    : userCrop)
+                            }
                             onSort={handleSort}
                             selectedSort={sortBy}
                             handleDelete={handleDelete}
@@ -129,7 +167,8 @@ const UsersList = () => {
 };
 
 UsersList.propTypes = {
-    users: PropTypes.array
+    users: PropTypes.func,
+    value: PropTypes.object
 };
 
 export default UsersList;
