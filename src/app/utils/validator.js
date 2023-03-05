@@ -25,11 +25,16 @@ export function validator(data, config) {
                 statusValidate = data.length < config.value;
                 break;
             }
-            // case "isName": {
-            //    const nameRegExp = /[^abc]+\s[^abc]+/g;
-            //    statusValidate = nameRegExp.test(data);
-            //    break;
-            // }
+            case "isNameNonWhitespaceCharacter": {
+                const NonWhitespaceCharacterRegExp = /^\S.+$/g;
+                statusValidate = !NonWhitespaceCharacterRegExp.test(data.name);
+                break;
+            }
+            case "isName": {
+                const nameRegExp = /^[^a-z]+\s+[^a-z]+$/g;
+                statusValidate = nameRegExp.test(data);
+                break;
+            }
             default:
                 break;
         }

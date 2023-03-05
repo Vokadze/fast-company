@@ -69,10 +69,7 @@ const UsersTable = ({
 };
 
 UsersTable.propTypes = {
-    users: PropTypes.oneOfType([
-        PropTypes.array.isRequired,
-        PropTypes.object.isRequired
-    ]),
+    users: PropTypes.array,
     onSort: PropTypes.func.isRequired,
     selectedSort: PropTypes.object.isRequired,
     onToggleBookMark: PropTypes.func.isRequired,

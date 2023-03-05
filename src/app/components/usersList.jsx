@@ -59,20 +59,24 @@ const UsersList = () => {
             ...prevState,
             [target.name]: target.value
         }));
+        console.log(target.value);
     };
     const validatorConfig = {
         name: {
             isRequired: {
                 message: "Имя обязательно для заполнения"
             },
-            isName: {
+             isName: {
                 message: "Введеное имя не существует в списке"
+             },
+            isNameNonWhitespaceCharacter: {
+                message: "не существует в списке"
             }
         }
     };
     useEffect(() => {
         validate();
-    }, [data, users]);
+    }, [data]);
     const validate = () => {
         const errors = validator(data, validatorConfig);
         setErrors(errors);
@@ -89,10 +93,10 @@ const UsersList = () => {
     if (users) {
         const filteredUsers = selectedProf
             ? users.filter(
-                (user) =>
-                    JSON.stringify(user.profession) ===
-                    JSON.stringify(selectedProf)
-            )
+                  (user) =>
+                      JSON.stringify(user.profession) ===
+                      JSON.stringify(selectedProf)
+              )
             : users;
 
         const count = filteredUsers.length;
@@ -102,8 +106,18 @@ const UsersList = () => {
             [sortBy.order]
         );
         const userCrop = paginate(sortedUsers, currentPage, pageSize);
+
+        const searchInputName = () => {
+            if (data.name !== "") {
+                return users.filter((user) => user.name.toLowerCase().trim() === data.name.toLowerCase().trim());
+            } else {
+                return userCrop;
+            }
+        };
+
         const clearFilter = () => {
             setSelectedProf();
+            searchInputName();
         };
 
         return (
@@ -126,30 +140,24 @@ const UsersList = () => {
                 )}
                 <div className="d-flex flex-column">
                     <SeachStatus length={count} />
-                    <form onSubmit={handleSubmit}>
-                        <TestInput
-                            className="form-control"
-                            placeholder="Имя..."
-                            name="name"
-                            value={data.value}
-                            onChange={handleChange}
-                            error={errors.name}
-                        />
-                    </form>
                     {count > 0 && (
-                        <UsersTable
-                            users={userCrop &&
-                                (users
-                                    ? users.filter(
-                                        (user) => user.name === data.name
-                                    )
-                                    : userCrop)
-                            }
-                            onSort={handleSort}
-                            selectedSort={sortBy}
-                            handleDelete={handleDelete}
-                            onToggleBookMark={handleToggleBookMark}
-                        />
+                        <form onSubmit={handleSubmit}>
+                            <TestInput
+                                placeholder="Имя..."
+                                name="name"
+                                value={data.name}
+                                onChange={handleChange}
+                                error={errors.name}
+                            />
+                            <UsersTable
+                                users={searchInputName()}
+                                onSort={handleSort}
+                                selectedSort={sortBy}
+                                handleDelete={handleDelete}
+                                onToggleBookMark={handleToggleBookMark}
+                                error={errors.name}
+                            />
+                        </form>
                     )}
                     <div className="d-flex justify-content-center">
                         <Pagination
@@ -167,8 +175,7 @@ const UsersList = () => {
 };
 
 UsersList.propTypes = {
-    users: PropTypes.func,
-    value: PropTypes.object
+    users: PropTypes.func
 };
 
 export default UsersList;
