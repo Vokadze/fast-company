@@ -8,7 +8,6 @@ import SeachStatus from "./seachStatus";
 import UsersTable from "../components/usersTable";
 import _ from "lodash";
 import TestInput from "./testInput";
-import { validator } from "../utils/validator";
 const UsersList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfessions] = useState();
@@ -16,7 +15,6 @@ const UsersList = () => {
     const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
     const [users, setUsers] = useState();
     const [data, setData] = useState({ name: "" });
-    const [errors, setErrors] = useState({});
     const pageSize = 8;
 
     useEffect(() => {
@@ -61,34 +59,6 @@ const UsersList = () => {
         }));
         console.log(target.value);
     };
-    const validatorConfig = {
-        name: {
-            isRequired: {
-                message: "Имя обязательно для заполнения"
-            },
-             isName: {
-                message: "Введеное имя не существует в списке"
-             },
-            isNameNonWhitespaceCharacter: {
-                message: "не существует в списке"
-            }
-        }
-    };
-    useEffect(() => {
-        validate();
-    }, [data]);
-    const validate = () => {
-        const errors = validator(data, validatorConfig);
-        setErrors(errors);
-        return Object.keys(errors).length === 0;
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const isValid = validate();
-        if (!isValid) return;
-        console.log(data);
-    };
 
     if (users) {
         const filteredUsers = selectedProf
@@ -109,7 +79,16 @@ const UsersList = () => {
 
         const searchInputName = () => {
             if (data.name !== "") {
-                return users.filter((user) => user.name.toLowerCase().trim() === data.name.toLowerCase().trim());
+                return users.filter((user) => {
+                    return (
+                        user.name
+                            .toLowerCase()
+                            .includes(data.name.toLowerCase().trim()) ===
+                        data.name
+                            .toLowerCase()
+                            .includes(data.name.toLowerCase().trim())
+                    );
+                });
             } else {
                 return userCrop;
             }
@@ -117,7 +96,6 @@ const UsersList = () => {
 
         const clearFilter = () => {
             setSelectedProf();
-            searchInputName();
         };
 
         return (
@@ -141,13 +119,12 @@ const UsersList = () => {
                 <div className="d-flex flex-column">
                     <SeachStatus length={count} />
                     {count > 0 && (
-                        <form onSubmit={handleSubmit}>
+                        <form action="">
                             <TestInput
                                 placeholder="Имя..."
                                 name="name"
                                 value={data.name}
                                 onChange={handleChange}
-                                error={errors.name}
                             />
                             <UsersTable
                                 users={searchInputName()}
@@ -155,7 +132,6 @@ const UsersList = () => {
                                 selectedSort={sortBy}
                                 handleDelete={handleDelete}
                                 onToggleBookMark={handleToggleBookMark}
-                                error={errors.name}
                             />
                         </form>
                     )}
