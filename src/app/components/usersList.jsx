@@ -14,7 +14,7 @@ const UsersList = () => {
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
     const [users, setUsers] = useState();
-    const [data, setData] = useState({ name: "" });
+    const [searchUser, setSearchUser] = useState("");
     const pageSize = 8;
 
     useEffect(() => {
@@ -39,11 +39,18 @@ const UsersList = () => {
     }, []);
     useEffect(() => {
         setCurrentPage(1);
-    }, [selectedProf]);
+    }, [selectedProf, searchUser]);
 
     const handelProfessionSelect = (item) => {
+        if (searchUser !== "") setSearchUser("");
         setSelectedProf(item);
     };
+
+    const handleSearchUser = ({ target }) => {
+        setSelectedProf(undefined);
+        setSearchUser(target.value);
+    };
+
     const handlePageChange = (pageIndex) => {
         setCurrentPage(pageIndex);
         console.log("page: ", pageIndex);
@@ -52,16 +59,15 @@ const UsersList = () => {
         setSortBy(item);
     };
 
-    const handleChange = ({ target }) => {
-        setData((prevState) => ({
-            ...prevState,
-            [target.name]: target.value
-        }));
-        console.log(target.value);
-    };
-
     if (users) {
-        const filteredUsers = selectedProf
+        const filteredUsers = searchUser
+            ? users.filter(
+                  (user) =>
+                      user.name
+                          .toLowerCase()
+                          .indexOf(searchUser.toLowerCase()) !== -1
+              )
+            : selectedProf
             ? users.filter(
                   (user) =>
                       JSON.stringify(user.profession) ===
@@ -76,23 +82,6 @@ const UsersList = () => {
             [sortBy.order]
         );
         const userCrop = paginate(sortedUsers, currentPage, pageSize);
-
-        const searchInputName = () => {
-            if (data.name !== "") {
-                return users.filter((user) => {
-                    return (
-                        user.name
-                            .toLowerCase()
-                            .includes(data.name.toLowerCase().trim()) ===
-                        data.name
-                            .toLowerCase()
-                            .includes(data.name.toLowerCase().trim())
-                    );
-                });
-            } else {
-                return userCrop;
-            }
-        };
 
         const clearFilter = () => {
             setSelectedProf();
@@ -118,22 +107,20 @@ const UsersList = () => {
                 )}
                 <div className="d-flex flex-column">
                     <SeachStatus length={count} />
+                    <TestInput
+                        placeholder="Имя..."
+                        name="name"
+                        value={searchUser}
+                        onChange={handleSearchUser}
+                    />
                     {count > 0 && (
-                        <form action="">
-                            <TestInput
-                                placeholder="Имя..."
-                                name="name"
-                                value={data.name}
-                                onChange={handleChange}
-                            />
-                            <UsersTable
-                                users={searchInputName()}
-                                onSort={handleSort}
-                                selectedSort={sortBy}
-                                handleDelete={handleDelete}
-                                onToggleBookMark={handleToggleBookMark}
-                            />
-                        </form>
+                        <UsersTable
+                            users={userCrop}
+                            onSort={handleSort}
+                            selectedSort={sortBy}
+                            handleDelete={handleDelete}
+                            onToggleBookMark={handleToggleBookMark}
+                        />
                     )}
                     <div className="d-flex justify-content-center">
                         <Pagination

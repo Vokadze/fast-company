@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const TestInput = ({ type, name, placeholder, value, onChange, error }) => {
+const TestInput = ({ type, name, placeholder, value, onChange }) => {
     return (
         <>
             <input
@@ -13,7 +13,6 @@ const TestInput = ({ type, name, placeholder, value, onChange, error }) => {
                 value={value}
                 onChange={onChange}
             />
-            {error && <p>{error}</p>}
         </>
     );
 };
@@ -27,8 +26,7 @@ TestInput.propTypes = {
     name: PropTypes.string,
     placeholder: PropTypes.string,
     value: PropTypes.string,
-    onChange: PropTypes.func,
-    error: PropTypes.string
+    onChange: PropTypes.func
 };
 
 export default TestInput;
