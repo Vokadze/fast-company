@@ -59,34 +59,35 @@ const UsersList = () => {
         setSortBy(item);
     };
 
-    if (users) {
-        const filteredUsers = searchUser
+     if (!users) return null;
+    const filteredUsers = searchUser
+        ? users.filter(
+            (user) =>
+                user.name
+                    .toLowerCase()
+                    .indexOf(searchUser.toLowerCase()) !== -1
+        )
+        : selectedProf
             ? users.filter(
-                  (user) =>
-                      user.name
-                          .toLowerCase()
-                          .indexOf(searchUser.toLowerCase()) !== -1
-              )
-            : selectedProf
-            ? users.filter(
-                  (user) =>
-                      JSON.stringify(user.profession) ===
-                      JSON.stringify(selectedProf)
-              )
+                (user) =>
+                    JSON.stringify(user.profession) ===
+                    JSON.stringify(selectedProf)
+            )
             : users;
 
-        const count = filteredUsers.length;
-        const sortedUsers = _.orderBy(
-            filteredUsers,
-            [sortBy.path],
-            [sortBy.order]
-        );
-        const userCrop = paginate(sortedUsers, currentPage, pageSize);
+    const count = filteredUsers.length;
+    const sortedUsers = _.orderBy(
+        filteredUsers,
+        [sortBy.path],
+        [sortBy.order]
+    );
+    const userCrop = paginate(sortedUsers, currentPage, pageSize);
 
-        const clearFilter = () => {
-            setSelectedProf();
-        };
+    const clearFilter = () => {
+        setSelectedProf();
+    };
 
+     if (users) {
         return (
             <div className="d-flex">
                 {professions && (
