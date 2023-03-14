@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
+import _ from "lodash";
 import PropTypes from "prop-types";
+
 import { paginate } from "../utils/paginate";
 import Pagination from "./pagination";
 import api from "../api";
 import GroupList from "./groupList";
 import SeachStatus from "./seachStatus";
 import UsersTable from "../components/usersTable";
-import _ from "lodash";
 import TestInput from "./testInput";
+
 const UsersList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfessions] = useState();
@@ -15,11 +17,13 @@ const UsersList = () => {
     const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
     const [users, setUsers] = useState();
     const [searchUser, setSearchUser] = useState("");
+
     const pageSize = 8;
 
     useEffect(() => {
         api.users.fetchAll().then((data) => setUsers(data));
     }, []);
+
     const handleDelete = (userId) => {
         setUsers(users.filter((user) => user._id !== userId));
     };
@@ -37,6 +41,7 @@ const UsersList = () => {
     useEffect(() => {
         api.professions.fetchAll().then((data) => setProfessions(data));
     }, []);
+
     useEffect(() => {
         setCurrentPage(1);
     }, [selectedProf, searchUser]);
@@ -55,6 +60,7 @@ const UsersList = () => {
         setCurrentPage(pageIndex);
         console.log("page: ", pageIndex);
     };
+
     const handleSort = (item) => {
         setSortBy(item);
     };
@@ -62,20 +68,25 @@ const UsersList = () => {
     if (users) {
         const filteredUsers = searchUser
             ? users.filter(
-                (user) =>
-                    user.name.toLowerCase().indexOf(searchUser.toLowerCase()) !==
-                    -1
-            )
+                  (user) =>
+                      user.name
+                          .toLowerCase()
+                          .indexOf(searchUser.toLowerCase()) !== -1
+              )
             : selectedProf
-                ? users.filter(
-                    (user) =>
-                        JSON.stringify(user.profession) ===
-                        JSON.stringify(selectedProf)
-                )
-                : users;
+            ? users.filter(
+                  (user) =>
+                      JSON.stringify(user.profession) ===
+                      JSON.stringify(selectedProf)
+              )
+            : users;
 
         const count = filteredUsers.length;
-        const sortedUsers = _.orderBy(filteredUsers, [sortBy.path], [sortBy.order]);
+        const sortedUsers = _.orderBy(
+            filteredUsers,
+            [sortBy.path],
+            [sortBy.order]
+        );
         const userCrop = paginate(sortedUsers, currentPage, pageSize);
 
         const clearFilter = () => {
@@ -129,7 +140,7 @@ const UsersList = () => {
             </div>
         );
     }
-    return "Loading...";
+    return "loading...";
 };
 
 UsersList.propTypes = {
