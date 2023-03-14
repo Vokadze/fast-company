@@ -27,10 +27,14 @@ const TextField = ({ label, type, name, value, onChange, error }) => {
                         type="button"
                         onClick={toggleShowPassword}
                     >
-                        <i className={"bi bi-eye" + (showPassword ? "-slash" : "")}></i>
+                        <i
+                            className={
+                                "bi bi-eye" + (showPassword ? "-slash" : "")
+                            }
+                        ></i>
                     </button>
                 )}
-            {error && <div className="invalid-feedback">{error}</div>}
+                {error && <div className="invalid-feedback">{error}</div>}
             </div>
         </div>
     );
@@ -41,10 +45,10 @@ TextField.defaultProps = {
 };
 
 TextField.propTypes = {
-    label: PropTypes.string.isRequired,
+    label: PropTypes.string,
     type: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
+    name: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
     onChange: PropTypes.func.isRequired,
     error: PropTypes.string
 };

@@ -69,7 +69,7 @@ const UsersTable = ({
 };
 
 UsersTable.propTypes = {
-    users: PropTypes.array.isRequired,
+    users: PropTypes.array,
     onSort: PropTypes.func.isRequired,
     selectedSort: PropTypes.object.isRequired,
     onToggleBookMark: PropTypes.func.isRequired,
