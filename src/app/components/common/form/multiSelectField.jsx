@@ -6,9 +6,9 @@ const MultiSelectField = ({ options, onChange, name, label }) => {
     const optionsArray =
         !Array.isArray(options) && typeof options === "object"
             ? Object.keys(options).map((optionName) => ({
-                label: options[optionName].name,
-                value: options[optionName]._id
-            }))
+                  label: options[optionName].name,
+                  value: options[optionName]._id
+              }))
             : options;
 
     const handleChange = (value) => {
@@ -17,9 +17,7 @@ const MultiSelectField = ({ options, onChange, name, label }) => {
 
     return (
         <div className="mb-4">
-            <label className="form-label">
-                {label}
-            </label>
+            <label className="form-label">{label}</label>
             <Select
                 isMulti
                 closeMenuOnSelect={false}
