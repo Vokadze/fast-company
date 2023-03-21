@@ -11,6 +11,7 @@ const SearchStatus = ({ length }) => {
         if ([2, 3, 4].indexOf(lastOne) >= 0) return "человека тусанут";
         return "человек тусанет";
     };
+
     return (
         <h2>
             <span

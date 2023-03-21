@@ -4,12 +4,12 @@ import { validator } from "../../utils/validator";
 import CheckBoxField from "../common/form/checkBoxField";
 
 const LoginForm = () => {
+    const [errors, setErrors] = useState({});
     const [data, setData] = useState({
         email: "",
         password: "",
         stayOn: false
     });
-    const [errors, setErrors] = useState({});
 
     const handleChange = (target) => {
         setData((prevState) => ({
@@ -17,6 +17,7 @@ const LoginForm = () => {
             [target.name]: target.value
         }));
     };
+
     const validatorConfig = {
         email: {
             isRequired: {
@@ -40,6 +41,7 @@ const LoginForm = () => {
             }
         }
     };
+
     useEffect(() => {
         validate();
     }, [data]);
@@ -56,6 +58,7 @@ const LoginForm = () => {
         if (!isValid) return;
         console.log(data);
     };
+
     return (
         <form onSubmit={handleSubmit}>
             <TextField
@@ -65,6 +68,7 @@ const LoginForm = () => {
                 onChange={handleChange}
                 error={errors.email}
             />
+
             <TextField
                 label="Пароль"
                 type="password"
@@ -73,6 +77,7 @@ const LoginForm = () => {
                 onChange={handleChange}
                 error={errors.password}
             />
+
             <CheckBoxField
                 name="stayOn"
                 value={data.stayOn}
@@ -80,6 +85,7 @@ const LoginForm = () => {
             >
                 Оставаться в системе
             </CheckBoxField>
+
             <button
                 type="submit"
                 disabled={!isValid}

@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 const UserPage = ({ userId }) => {
     const history = useHistory();
     const [user, setUser] = useState();
+
     useEffect(() => {
         api.users.getById(userId).then((data) => setUser(data));
     }, []);
@@ -14,6 +15,7 @@ const UserPage = ({ userId }) => {
     const handleClick = () => {
         history.push("/users");
     };
+
     if (user) {
         return (
             <div>

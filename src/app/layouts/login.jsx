@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
+
 import LoginForm from "../components/ui/loginForm";
 import RegisterForm from "../components/ui/registerForm";
 
 const Login = () => {
     const { type } = useParams();
+
     const [formType, setFormType] = useState(
         type === "register" ? type : "login"
     );
+
     const toggleFormType = (params) => {
         setFormType((prevState) =>
             prevState === "register" ? "login" : "register"
         );
     };
+
     return (
         <div className="container mt-5">
             <div className="row">
