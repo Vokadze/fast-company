@@ -54,9 +54,9 @@ TextField.defaultProps = {
 TextField.propTypes = {
     label: PropTypes.string,
     type: PropTypes.string.isRequired,
-    name: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+    name: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.array]),
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
-    onChange: PropTypes.func.isRequired,
+    onChange: PropTypes.func,
     error: PropTypes.string
 };
 
