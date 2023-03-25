@@ -51,11 +51,11 @@ const SelectField = ({
 
 SelectField.propTypes = {
     label: PropTypes.string,
-    value: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     onChange: PropTypes.func,
     defaultOption: PropTypes.string,
     options: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-    name: PropTypes.string,
+    name: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
     error: PropTypes.string
 };
 
