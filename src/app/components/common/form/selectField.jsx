@@ -37,9 +37,9 @@ const SelectField = ({
                 <option disabled value="">
                     {defaultOption}
                 </option>
-                {optionsArray > 0 &&
+                {optionsArray &&
                     optionsArray.map((option) => (
-                        <option value={option.value} key={option.name}>
+                        <option value={option.value} key={option.value}>
                             {option.label}
                         </option>
                     ))}
@@ -55,7 +55,11 @@ SelectField.propTypes = {
     onChange: PropTypes.func,
     defaultOption: PropTypes.string,
     options: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-    name: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+    name: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.object,
+        PropTypes.array
+    ]),
     error: PropTypes.string
 };
 

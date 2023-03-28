@@ -17,27 +17,6 @@ const UserPage = ({ userId }) => {
         history.push(`${userId}/edit`);
     };
 
-    // const userPageEdit = () => {
-    //    return (
-    //        <div>
-    //            <h1>{user.name}</h1>
-    //            <h2 className="pb-3">Профессия: {user.profession.name}</h2>
-    //            <Qualities qualities={user.qualities} />
-    //            <p className="pt-2">
-    //                completedMeetings: {user.completedMeetings}
-    //            </p>
-    //            <h2 className="pb-2">Rate: {user.rate}</h2>
-    //            <button
-    //                className="btn btn-primary"
-    //                onClick={handleClick}
-    //                to={`${userId}/edit`}
-    //            >
-    //                Изменить
-    //            </button>
-    //        </div>
-    //    );
-    // };
-
     if (user) {
         return (
             <>
