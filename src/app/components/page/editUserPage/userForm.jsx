@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import PropTypes from "prop-types";
-
 import api from "../../../api";
+
+import { validator } from "../../../utils/validator";
 import TextField from "../../common/form/testField";
 import SelectField from "../../common/form/selectField";
 import RadioField from "../../common/form/radioField";
 import MultiSelectField from "../../common/form/multiSelectField";
-import { validator } from "../../../utils/validator";
+import { useParams } from "react-router-dom";
 
-const UserForm = ({ getFormUser }) => {
+const UserForm = () => {
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -17,22 +16,13 @@ const UserForm = ({ getFormUser }) => {
         sex: "",
         qualities: []
     });
-    const [professions, setProfessions] = useState({});
+    const [professions, setProfessions] = useState([]);
     const [qualities, setQualities] = useState([]);
-    const { userId } = useParams();
     const [errors, setErrors] = useState({});
-
-    const getProfById = (id) => {
-        const profIndex = Object.values(professions).findIndex(
-            ({ _id }) => _id === id
-        );
-        return professions[profIndex];
-    };
-
-    console.log(getProfById());
+    const { userId } = useParams();
 
     useEffect(() => {
-        api.users.getById(userId).then((formData) => setFormData(formData));
+        api.users.getById(userId).then((data) => setFormData(data));
     }, []);
 
     useEffect(() => {
@@ -44,14 +34,18 @@ const UserForm = ({ getFormUser }) => {
             setProfessions(professionList);
         });
         api.qualities.fetchAll().then((data) => {
-            const qualitiesList = Object.values(data).map((quality) => ({
-                value: quality._id,
-                label: quality.name,
-                color: quality.color
+            const qualitiesList = Object.keys(data).map((optionName) => ({
+                label: data[optionName].name,
+                value: data[optionName]._id,
+                color: data[optionName].color
             }));
             setQualities(qualitiesList);
         });
     }, []);
+
+    useEffect(() => {
+        console.log(qualities);
+    }, [qualities]);
 
     const handleChange = (target) => {
         setFormData((prevState) => ({
@@ -59,26 +53,6 @@ const UserForm = ({ getFormUser }) => {
             [target.name]: target.value
         }));
         console.log(target.value);
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const sendProfName = formData.profession._id
-            ? formData.profession._id
-            : formData.profession;
-
-        getFormUser({
-            ...formData,
-            profession: getProfById(sendProfName)
-        });
-
-        console.log({
-            name: formData.name,
-            email: formData.email,
-            profession: sendProfName,
-            sex: "",
-            qualities: formData.qualities
-        });
     };
 
     const validatorConfig = {
@@ -104,11 +78,45 @@ const UserForm = ({ getFormUser }) => {
 
     useEffect(() => {
         validate();
-    }, []);
+    }, [formData]);
 
     const validate = () => {
         const formErrors = validator(validatorConfig, errors);
         setErrors(formErrors);
+    };
+
+    const getProfessionById = (id) => {
+        for (const prof of professions) {
+            if (prof.value === id) {
+                return { _id: prof.value, name: prof.label };
+            }
+        }
+    };
+
+    const getQualities = (elements) => {
+        const qualitiesArray = [];
+        for (const elem of elements) {
+            for (const quality in qualities) {
+                if (elem.value === qualities[quality].value) {
+                    qualitiesArray.push({
+                        _id: qualities[quality].value,
+                        name: qualities[quality].label,
+                        color: qualities[quality].color
+                    });
+                }
+            }
+        }
+        return qualitiesArray;
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const { profession, qualities } = formData;
+        console.log({
+            ...formData,
+            profession: getProfessionById(profession),
+            qualities: getQualities(qualities)
+        });
     };
 
     return (
@@ -137,6 +145,7 @@ const UserForm = ({ getFormUser }) => {
                 options={professions}
                 onChange={handleChange}
                 value={formData.profession}
+                error={errors.profession}
             />
 
             <RadioField
@@ -155,23 +164,18 @@ const UserForm = ({ getFormUser }) => {
                 onChange={handleChange}
                 name="qualities"
                 label="Выберите ваши качества"
-                error={errors.qualities}
                 defaultValue={formData.qualities}
             />
 
             <button
                 className="btn btn-primary"
-                type="button"
+                type="submit"
                 onClick={handleSubmit}
             >
                 Обновить
             </button>
         </>
     );
-};
-
-UserForm.propTypes = {
-    getFormUser: PropTypes.func
 };
 
 export default UserForm;
