@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 const SelectField = ({
     label,
     value,
@@ -27,6 +28,7 @@ const SelectField = ({
             <label htmlFor={name} className="form-label">
                 {label}
             </label>
+
             <select
                 className={getInputClasses()}
                 id={name}
@@ -44,7 +46,9 @@ const SelectField = ({
                         </option>
                     ))}
             </select>
+
             {error && <div className="invalid-feedback">{error}</div>}
+
         </div>
     );
 };
