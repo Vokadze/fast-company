@@ -55,7 +55,7 @@ SelectField.propTypes = {
     onChange: PropTypes.func,
     defaultOption: PropTypes.string,
     options: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-        name: PropTypes.oneOfType([
+    name: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.object,
         PropTypes.array
