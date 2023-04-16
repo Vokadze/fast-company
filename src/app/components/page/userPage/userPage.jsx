@@ -14,7 +14,6 @@ const UserPage = ({ userId }) => {
     }, []);
 
     const handleClick = () => {
-        // history.push("/users");
         history.push(history.location.pathname + "/edit");
     };
 
