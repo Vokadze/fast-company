@@ -48,14 +48,17 @@ const SelectField = ({
             </select>
 
             {error && <div className="invalid-feedback">{error}</div>}
-
         </div>
     );
 };
 
 SelectField.propTypes = {
     label: PropTypes.string,
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    value: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.array,
+        PropTypes.string
+    ]),
     onChange: PropTypes.func,
     defaultOption: PropTypes.string,
     options: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
