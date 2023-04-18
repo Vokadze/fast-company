@@ -48,7 +48,7 @@ const Comment = ({
                                         <p className="mb-1">
                                             {user && user.name}
                                             <span className="small">
-                                                - {displayData(created)}
+                                                {` - ${displayData(created)}`}
                                             </span>
                                         </p>
                                         <button

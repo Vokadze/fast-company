@@ -58,7 +58,7 @@ const AddCommentForm = ({ onSubmit }) => {
     };
 
     const arrayOfUsers = users && Object.keys(users).map((userId) => ({
-        name: users[userId].name,
+        label: users[userId].name,
         value: users[userId]._id
     }));
 
@@ -73,7 +73,7 @@ const AddCommentForm = ({ onSubmit }) => {
                             options={arrayOfUsers}
                             name="userId"
                             onChange={handleChange}
-                            value={data.userId}
+                            value={data.userId ? data.name : ""}
                             error={errors.userId}
                         />
 
