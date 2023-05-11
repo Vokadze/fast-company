@@ -57,10 +57,12 @@ const AddCommentForm = ({ onSubmit }) => {
         clearForm();
     };
 
-    const arrayOfUsers = users && Object.keys(users).map((userId) => ({
-        label: users[userId].name,
-        value: users[userId]._id
-    }));
+    const arrayOfUsers =
+        users &&
+        Object.keys(users).map((userId) => ({
+            label: users[userId].name,
+            value: users[userId]._id
+        }));
 
     return (
         <div className="col-md-12">
