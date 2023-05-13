@@ -12,8 +12,11 @@ const LoginForm = () => {
         stayOn: false
     });
     const history = useHistory();
-    const { sinIn } = useAuth();
+
+    const { logIn } = useAuth();
+    // const { logIn } = useAuth({});
     const [errors, setErrors] = useState({});
+    // const [errors, setErrors] = useState();
     const [enterError, setEnterError] = useState(null);
 
     const handleChange = (target) => {
@@ -51,8 +54,13 @@ const LoginForm = () => {
         if (!isValid) return;
 
         try {
-            await sinIn(data);
+            await logIn(data);
             history.push("/");
+            // history.push(
+            //    history.location.state
+            //        ? history.location.state.from.pathname
+            //        : "/"
+            // );
         } catch (error) {
             setEnterError(error.message);
         }
@@ -85,7 +93,7 @@ const LoginForm = () => {
                 Оставаться в системе
             </CheckBoxField>
 
-            {enterError && <p className="text-denger">{enterError}</p>}
+            {enterError && <p className="text-danger">{enterError}</p>}
             <button
                 type="submit"
                 disabled={!isValid || enterError}

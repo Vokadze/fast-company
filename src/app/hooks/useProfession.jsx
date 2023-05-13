@@ -15,8 +15,10 @@ export const ProfessionProvider = ({ children }) => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        toast(error);
-        setError(null);
+        // if (error !== null) {
+            toast(error);
+            setError(null);
+        // }
     }, [error]);
 
     useEffect(() => {
@@ -24,7 +26,7 @@ export const ProfessionProvider = ({ children }) => {
     }, []);
 
     function errorCatcher(error) {
-        const { message } = error.responce.data;
+        const { message } = error.response.data;
         setError(message);
     }
 

@@ -4,8 +4,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import userService from "../service/user.service";
 import { setTokens } from "../service/localStorage.service";
-
-const httpAuth = axios.create({
+// localStorageService,
+export const httpAuth = axios.create({
     baseURL: "https://identitytoolkit.googleapis.com/v1/",
     params: {
         key: process.env.REACT_APP_FIREBASE_KEY
@@ -19,10 +19,11 @@ export const useAuth = () => {
 };
 
 const AuthProvider = ({ children }) => {
-    const [currentUser, setUser] = useState({});
+    const [currentUser, setUser] = useState();
     const [error, setError] = useState(null);
+    // const [isLoading, setLoading] = useState(true);
 
-    async function sinIn({ email, password }) {
+    async function logIn({ email, password }) {
         try {
             const { data } = await httpAuth.post(
                 "accounts:signInWithPassword",
@@ -33,6 +34,7 @@ const AuthProvider = ({ children }) => {
                 }
             );
             setTokens(data);
+            // await getUserData();
         } catch (error) {
             errorCatcher(error);
             const { code, message } = error.response.data.error;
@@ -50,6 +52,18 @@ const AuthProvider = ({ children }) => {
         }
     }
 
+    /**
+     * function logOut() {
+        localStorageService.removeAuthData();
+        setUser(null);
+        history.push("/");
+        }
+     */
+
+    // function randomInt(min, max) {
+    //    return Math.floor(Math.random() * (max - min + 1) + min);
+    // }
+
     async function singUp({ email, password, ...rest }) {
         try {
             const { data } = await httpAuth.post("accounts:signUp", {
@@ -58,7 +72,13 @@ const AuthProvider = ({ children }) => {
                 returnSecureToken: true
             });
             setTokens(data);
-            await createUser({ _id: data.localId, email, ...rest });
+            await createUser({
+                _id: data.localId,
+                email,
+               // rate: randomInt(1, 5),
+                // completedMeetings: randomInt(0, 200),
+                ...rest
+            });
         } catch (error) {
             errorCatcher(error);
             const { code, message } = error.response.data.error;
@@ -71,13 +91,13 @@ const AuthProvider = ({ children }) => {
                     throw errorObject;
                 }
             }
-            // throw new Error
         }
     }
 
     async function createUser(data) {
         try {
-            const { content } = userService.create(data);
+            const { content } = await userService.create(data);
+            console.log(content);
             setUser(content);
         } catch (error) {
             errorCatcher(error);
@@ -88,6 +108,25 @@ const AuthProvider = ({ children }) => {
         const { message } = error.response.data;
         setError(message);
     }
+
+    // async function getUserData() {
+    //    try {
+    //        const { content } = await userService.getCurrentUser();
+    //        setUser(content);
+    //    } catch (error) {
+    //        errorCatcher(error);
+    //    } finally {
+    //        setLoading(false);
+    //    }
+    // }
+
+    // useEffect(() => {
+    //    if (localStorageService.getAccessToken()) {
+    //        getUserData();
+    //    } else {
+    //        setLoading(false);
+    //    }
+    // }, []);
 
     useEffect(() => {
         if (error !== null) {
@@ -102,10 +141,10 @@ const AuthProvider = ({ children }) => {
             PropTypes.node
         ])
     };
-
     return (
-        <AuthContext.Provider value={{ singUp, sinIn, currentUser }}>
+        <AuthContext.Provider value={{ singUp, logIn, currentUser }}>
             {children}
+            {/* {!isLoading ? children : "Loading ..."} */}
         </AuthContext.Provider>
     );
 };

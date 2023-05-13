@@ -35,8 +35,9 @@ const UserProvider = ({ children }) => {
         }
 
         function errorCatcher(error) {
-            const { message } = error.responce.data;
+            const { message } = error.response.data;
             setError(message);
+            // setLoading(false);
         }
     }
 

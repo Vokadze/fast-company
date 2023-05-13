@@ -9,6 +9,7 @@ import NavBar from "./components/ui/navBar";
 import { ProfessionProvider } from "./hooks/useProfession";
 import { QualitiesProvider } from "./hooks/useQualities";
 import AuthProvider from "./hooks/useAuth";
+// import ProtectedRoute from "./components/common/protectedRoute";
 
 function App() {
     return (
@@ -19,10 +20,12 @@ function App() {
                 <QualitiesProvider>
                     <ProfessionProvider>
                         <Switch>
+                            {/* <ProtectedRoute */}
                             <Route
                                 path="/users/:userId?/:edit?"
                                 component={Users}
                             />
+                            {/* /> */}
                             <Route path="/login/:type?" component={Login} />
                             <Route path="/" exact component={Main} />
                             <Redirect to="/" />
@@ -30,6 +33,7 @@ function App() {
                     </ProfessionProvider>
                 </QualitiesProvider>
             </AuthProvider>
+
             <ToastContainer />
         </div>
     );
