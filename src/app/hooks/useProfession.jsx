@@ -16,8 +16,8 @@ export const ProfessionProvider = ({ children }) => {
 
     useEffect(() => {
         // if (error !== null) {
-            toast(error);
-            setError(null);
+        toast(error);
+        setError(null);
         // }
     }, [error]);
 

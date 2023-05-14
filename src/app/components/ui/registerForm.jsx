@@ -23,7 +23,7 @@ const RegisterForm = () => {
         licence: false
     });
 
-    const { singUp } = useAuth();
+    const { signUp } = useAuth();
     const { qualities } = useQualities();
     const qualitiesList = qualities.map((q) => ({
         label: q.name,
@@ -108,7 +108,7 @@ const RegisterForm = () => {
         };
 
         try {
-            await singUp(newData);
+            await signUp(newData);
             history.push("/");
         } catch (error) {
             setErrors(error);
