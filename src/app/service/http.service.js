@@ -55,7 +55,6 @@ http.interceptors.response.use(
     (res) => {
         if (configFile.isFareBase) {
             res.data = { content: transformData(res.data) };
-            console.log(res.data);
         }
         return res;
     },

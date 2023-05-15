@@ -12,11 +12,9 @@ const LoginForm = () => {
         stayOn: false
     });
     const history = useHistory();
-
+    console.log(history);
     const { logIn } = useAuth();
-    // const { logIn } = useAuth({});
     const [errors, setErrors] = useState({});
-    // const [errors, setErrors] = useState();
     const [enterError, setEnterError] = useState(null);
 
     const handleChange = (target) => {
@@ -56,8 +54,9 @@ const LoginForm = () => {
         try {
             await logIn(data);
             history.push("/");
+            // console.log(history.location.state.from.pathname);
             // history.push(
-            //    history.location.state
+            //    history.location.state.from.pathname
             //        ? history.location.state.from.pathname
             //        : "/"
             // );

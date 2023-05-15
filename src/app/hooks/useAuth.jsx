@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -23,7 +24,8 @@ export const useAuth = () => {
 const AuthProvider = ({ children }) => {
     const [currentUser, setUser] = useState();
     const [error, setError] = useState(null);
-    // const [isLoading, setLoading] = useState(true);
+    const [isLoading, setLoading] = useState(true);
+    const history = useHistory();
 
     async function logIn({ email, password }) {
         try {
@@ -54,13 +56,11 @@ const AuthProvider = ({ children }) => {
         }
     }
 
-    /**
-     * function logOut() {
+    function logOut() {
         localStorageService.removeAuthData();
         setUser(null);
         history.push("/");
-        }
-     */
+    }
 
     function randomInt(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
@@ -79,6 +79,11 @@ const AuthProvider = ({ children }) => {
                 email,
                 rate: randomInt(1, 5),
                 completedMeetings: randomInt(0, 200),
+                image: `https://avatars.dicebear.com/api/avataaars/${(
+                    Math.random() + 1
+                )
+                    .toString(36)
+                    .substring(7)}.svg`,
                 ...rest
             });
         } catch (error) {
@@ -117,17 +122,16 @@ const AuthProvider = ({ children }) => {
             setUser(content);
         } catch (error) {
             errorCatcher(error);
+        } finally {
+            setLoading(false);
         }
-        // finally {
-        //        setLoading(false);
-        //    }
     }
 
     useEffect(() => {
         if (localStorageService.getAccessToken()) {
             getUserData();
-            //    } else {
-            //        setLoading(false);
+        } else {
+            setLoading(false);
         }
     }, []);
 
@@ -145,9 +149,8 @@ const AuthProvider = ({ children }) => {
         ])
     };
     return (
-        <AuthContext.Provider value={{ signUp, logIn, currentUser }}>
-            {children}
-            {/* {!isLoading ? children : "Loading ..."} */}
+        <AuthContext.Provider value={{ signUp, logIn, currentUser, logOut }}>
+            {!isLoading ? children : "Loading ..."}
         </AuthContext.Provider>
     );
 };
