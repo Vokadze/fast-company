@@ -15,6 +15,13 @@ export const QualitiesProvider = ({ children }) => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        if (error !== null) {
+            toast(error);
+            setError(null);
+        }
+    }, [error]);
+
+    useEffect(() => {
         const getQualities = async () => {
             try {
                 const { content } = await qualityService.fetchAll();
@@ -36,23 +43,16 @@ export const QualitiesProvider = ({ children }) => {
         setError(message);
     }
 
-    useEffect(() => {
-        if (error !== null) {
-            toast(error);
-            setError(null);
-        }
-    }, [error]);
-
-    QualitiesProvider.propTypes = {
-        children: PropTypes.oneOfType([
-            PropTypes.arrayOf(PropTypes.node),
-            PropTypes.node
-        ])
-    };
-
     return (
         <QualitiesContext.Provider value={{ qualities, getQuality, isLoading }}>
             {children}
         </QualitiesContext.Provider>
     );
+};
+
+QualitiesProvider.propTypes = {
+    children: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node
+    ])
 };
