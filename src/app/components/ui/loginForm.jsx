@@ -12,7 +12,6 @@ const LoginForm = () => {
         stayOn: false
     });
     const history = useHistory();
-    console.log(history);
     const { logIn } = useAuth();
     const [errors, setErrors] = useState({});
     const [enterError, setEnterError] = useState(null);

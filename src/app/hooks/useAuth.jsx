@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { toast } from "react-toastify";
+
 import userService from "../service/user.service";
 import localStorageService, {
     setTokens
@@ -64,6 +65,17 @@ const AuthProvider = ({ children }) => {
 
     function randomInt(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+
+    async function updateUserData(data) {
+        const { content } = userService.update(data);
+        setUser(content);
+        try {
+            const { content } = userService.update(data);
+            setUser(content);
+        } catch (error) {
+            errorCatcher(error);
+        }
     }
 
     async function signUp({ email, password, ...rest }) {
@@ -149,7 +161,9 @@ const AuthProvider = ({ children }) => {
         ])
     };
     return (
-        <AuthContext.Provider value={{ signUp, logIn, currentUser, logOut }}>
+        <AuthContext.Provider
+            value={{ signUp, logIn, currentUser, logOut, updateUserData }}
+        >
             {!isLoading ? children : "Loading ..."}
         </AuthContext.Provider>
     );

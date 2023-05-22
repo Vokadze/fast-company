@@ -58,6 +58,7 @@ http.interceptors.response.use(
         }
         return res;
     },
+
     function (error) {
         const expectedErrors =
             error.response &&
@@ -68,6 +69,7 @@ http.interceptors.response.use(
             console.log(error);
             toast.error("Something was wrong, try it later");
         }
+
         return Promise.reject(error);
     }
 );
@@ -76,7 +78,8 @@ const httpService = {
     get: http.get,
     post: http.post,
     put: http.put,
-    delete: http.delete
+    delete: http.delete,
+    patch: http.patch
 };
 
 export default httpService;
