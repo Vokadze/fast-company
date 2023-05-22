@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { toast } from "react-toastify";
+
 import userService from "../service/user.service";
 import localStorageService, {
     setTokens
@@ -67,8 +68,8 @@ const AuthProvider = ({ children }) => {
     }
 
     async function updateUserData(data) {
-        // const { content } = userService.update(data);
-        // setUser(content);
+        const { content } = userService.update(data);
+        setUser(content);
         try {
             const { content } = userService.update(data);
             setUser(content);

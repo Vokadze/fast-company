@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useAuth } from "../../hooks/useAuth";
 
@@ -14,9 +14,7 @@ const ProtectedRoute = ({ component: Component, children, ...rest }) => {
                         <Redirect
                             to={{
                                 pathname: "/users",
-                                state: {
-                                    from: props.location
-                                }
+                                state: { from: props.location }
                             }}
                         />
                     );

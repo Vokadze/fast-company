@@ -20,24 +20,6 @@ const UserProvider = ({ children }) => {
         getUsers();
     }, []);
 
-    useEffect(() => {
-        if (error !== null) {
-            toast(error);
-            setError(null);
-        }
-    }, [error]);
-
-    useEffect(() => {
-        if (!isLoading) {
-            const newUsers = [...users];
-            const indexUser = newUsers.findIndex(
-                (u) => u._id === currentUser._id
-            );
-            newUsers[indexUser] = currentUser;
-            setUsers(newUsers);
-        }
-    }, [currentUser]);
-
     async function getUsers() {
         try {
             const { content } = await userService.get();
@@ -52,6 +34,24 @@ const UserProvider = ({ children }) => {
             setError(message);
         }
     }
+
+    useEffect(() => {
+        if (!isLoading) {
+            const newUsers = [...users];
+            const indexUser = newUsers.findIndex(
+                (u) => u._id === currentUser._id
+            );
+            newUsers[indexUser] = currentUser;
+            setUsers(newUsers);
+        }
+    }, [currentUser]);
+
+    useEffect(() => {
+        if (error !== null) {
+            toast(error);
+            setError(null);
+        }
+    }, [error]);
 
     function getUserById(userId) {
         return users.find((u) => u._id === userId);
