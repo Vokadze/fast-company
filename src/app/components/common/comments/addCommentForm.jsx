@@ -69,11 +69,12 @@ const AddCommentForm = ({ onSubmit }) => {
                     <h2>New comment</h2>
                     <form onSubmit={handleSubmit}>
                         <SelectField
-                            defaultOption="Выберите пользователя"
+                            onChange={handleChange}
                             options={arrayOfUsers}
                             name="userId"
-                            onChange={handleChange}
-                            value={data.userId ? data.name : ""}
+                            value={data.userId}
+                            // добавить в value ( ? data.name : "" )
+                            defaultOption="Выберите пользователя"
                             error={errors.userId}
                         />
 

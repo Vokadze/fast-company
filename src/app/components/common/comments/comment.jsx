@@ -6,7 +6,7 @@ import { displayData } from "../../../utils/displayData";
 
 const Comment = ({
     content,
-    edited_at: edited,
+    // edited_at: edited,
     created_at: created,
     _id: id,
     userId,
@@ -71,7 +71,7 @@ const Comment = ({
 
 Comment.propTypes = {
     content: PropTypes.string,
-    edited_at: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    // edited_at: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     created_at: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     _id: PropTypes.string,
     userId: PropTypes.string,
