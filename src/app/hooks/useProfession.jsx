@@ -15,10 +15,10 @@ export const ProfessionProvider = ({ children }) => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        // if (error !== null) {
-        toast(error);
-        setError(null);
-        // }
+        if (error !== null) {
+            toast(error);
+            setError(null);
+        }
     }, [error]);
 
     useEffect(() => {
