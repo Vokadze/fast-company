@@ -55,7 +55,7 @@ const LoginForm = () => {
             history.push("/");
             // console.log(history.location.state.from.pathname);
             // history.push(
-            //    history.location.state.from.pathname
+            //    history.location.state
             //        ? history.location.state.from.pathname
             //        : "/"
             // );

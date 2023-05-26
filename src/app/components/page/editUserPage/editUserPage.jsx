@@ -2,16 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import { validator } from "../../../utils/validator";
-
 import TextField from "../../common/form/testField";
 import SelectField from "../../common/form/selectField";
 import RadioField from "../../common/form/radioField";
 import MultiSelectField from "../../common/form/multiSelectField";
 import BackHistoryButton from "../../common/backBuuton";
-
-import { useAuth } from "../../../hooks/useAuth";
 import { useQualities } from "../../../hooks/useQualities";
 import { useProfessions } from "../../../hooks/useProfession";
+import { useAuth } from "../../../hooks/useAuth";
 
 const EditUserPage = () => {
     const history = useHistory();
@@ -42,7 +40,7 @@ const EditUserPage = () => {
             qualities: data.qualities.map((q) => q.value)
         });
 
-        history.push(`/users/${currentUser._id}`);
+        history.push("/users/" + `${currentUser._id}`);
     };
 
     function getQualitiesById(qualitieIds) {
@@ -59,14 +57,16 @@ const EditUserPage = () => {
     }
 
     const transformData = (data) => {
-        return getQualitiesById(data).map((qual) => ({
+        const result = getQualitiesById(data).map((qual) => ({
             label: qual.name,
             value: qual._id
         }));
+        return result;
     };
 
     useEffect(() => {
         if (!professionsLoading && !qualitiesLoading && currentUser && !data) {
+            console.log(currentUser._id);
             setData({
                 ...currentUser,
                 qualities: transformData(currentUser.qualities)

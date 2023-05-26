@@ -20,6 +20,13 @@ const UserProvider = ({ children }) => {
         getUsers();
     }, []);
 
+    useEffect(() => {
+        if (error !== null) {
+            toast(error);
+            setError(null);
+        }
+    }, [error]);
+
     async function getUsers() {
         try {
             const { content } = await userService.get();
@@ -27,11 +34,6 @@ const UserProvider = ({ children }) => {
             setLoading(false);
         } catch (error) {
             errorCatcher(error);
-        }
-
-        function errorCatcher(error) {
-            const { message } = error.response.data;
-            setError(message);
         }
     }
 
@@ -41,17 +43,15 @@ const UserProvider = ({ children }) => {
             const indexUser = newUsers.findIndex(
                 (u) => u._id === currentUser._id
             );
-            newUsers[indexUser] = currentUser;
+            newUsers[indexUser] = currentUser._id;
             setUsers(newUsers);
         }
     }, [currentUser]);
 
-    useEffect(() => {
-        if (error !== null) {
-            toast(error);
-            setError(null);
-        }
-    }, [error]);
+    function errorCatcher(error) {
+        const { message } = error.response.data;
+        setError(message);
+    }
 
     function getUserById(userId) {
         return users.find((u) => u._id === userId);
