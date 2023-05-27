@@ -7,14 +7,16 @@ import Pagination from "../../common/pagination";
 import GroupList from "../../common/groupList";
 import SeachStatus from "../../ui/seachStatus";
 import UsersTable from "../../ui/usersTable";
-import { useUser } from "../../../hooks/useUsers";
-import { useAuth } from "../../../hooks/useAuth";
 import { useSelector } from "react-redux";
-import { getProfessions, getProfessionsLoadingStatus } from "../../../store/professions";
+import {
+    getProfessions,
+    getProfessionsLoadingStatus
+} from "../../../store/professions";
+import { getCurrentUserId, getUsersList } from "../../../store/users";
 
 const UsersListPage = () => {
-    const { users } = useUser();
-    const { currentUser } = useAuth();
+    const users = useSelector(getUsersList());
+    const currentUserId = useSelector(getCurrentUserId());
     const professions = useSelector(getProfessions());
     const professionsLoading = useSelector(getProfessionsLoadingStatus());
     const [currentPage, setCurrentPage] = useState(1);
@@ -67,19 +69,19 @@ const UsersListPage = () => {
         function filterUsers(data) {
             const filteredUsers = searchQuery
                 ? data.filter(
-                    (user) =>
-                        user.name
-                            .toLowerCase()
-                            .indexOf(searchQuery.toLowerCase()) !== -1
-                )
+                      (user) =>
+                          user.name
+                              .toLowerCase()
+                              .indexOf(searchQuery.toLowerCase()) !== -1
+                  )
                 : selectedProf
-                    ? data.filter(
-                        (user) =>
-                            JSON.stringify(user.profession) ===
-                            JSON.stringify(selectedProf)
-                    )
-                    : data;
-            return filteredUsers.filter((u) => u._id !== currentUser._id);
+                ? data.filter(
+                      (user) =>
+                          JSON.stringify(user.profession) ===
+                          JSON.stringify(selectedProf)
+                  )
+                : data;
+            return filteredUsers.filter((u) => u._id !== currentUserId);
         }
 
         const filteredUsers = filterUsers(users);
