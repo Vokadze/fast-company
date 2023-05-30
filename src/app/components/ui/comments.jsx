@@ -1,25 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { orderBy } from "lodash";
 
 import CommentsList from "../common/comments/commentsList";
 import AddCommentForm from "../common/comments/addCommentForm";
 import { useComments } from "../../hooks/useComments";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    getComments,
+    getCommentsLoadingStatus,
+    loadCommentsList
+} from "../../store/comments";
 
 const Comments = () => {
-    const { createComment, comments, removeComment } = useComments();
+    const { userId } = useParams();
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(loadCommentsList(userId));
+    }, [userId]);
+
+    const isLoading = useSelector(getCommentsLoadingStatus());
+    const { createComment, removeComment } = useComments();
+    const comments = useSelector(getComments());
 
     const handleSubmit = (data) => {
         createComment(data);
-        // api.comments
-        //    .add({ ...data, pageId: userId })
-        //    .then((data) => setComments([...comments, data]));
     };
 
     const handleRemoveComment = (id) => {
         removeComment(id);
-        // api.comments.remove(id).then((id) => {
-        //    setComments(comments.filter((x) => x._id !== id));
-        // });
     };
 
     const sortedComments = orderBy(comments, ["created_at"], ["desc"]);
@@ -36,10 +46,14 @@ const Comments = () => {
                     <div className="card-body">
                         <h2>Comments</h2>
                         <hr />
-                        <CommentsList
-                            comments={sortedComments}
-                            onRemove={handleRemoveComment}
-                        />
+                        {!isLoading ? (
+                            <CommentsList
+                                comments={sortedComments}
+                                onRemove={handleRemoveComment}
+                            />
+                        ) : (
+                            "loading..."
+                        )}
                     </div>
                 </div>
             )}
