@@ -5,7 +5,7 @@ import TextField from "../../common/form/testField";
 import SelectField from "../../common/form/selectField";
 import RadioField from "../../common/form/radioField";
 import MultiSelectField from "../../common/form/multiSelectField";
-import BackHistoryButton from "../../common/backBuuton";
+import BackHistoryButton from "../../common/backButton";
 import { useDispatch, useSelector } from "react-redux";
 import {
     getQualities,
@@ -74,7 +74,7 @@ const EditUserPage = () => {
 
     useEffect(() => {
         if (!professionsLoading && !qualitiesLoading && currentUser && !data) {
-            console.log(currentUser._id);
+            // console.log(currentUser._id);
             setData({
                 ...currentUser,
                 qualities: transformData(currentUser.qualities)
@@ -89,20 +89,23 @@ const EditUserPage = () => {
     }, [data]);
 
     const validatorConfig = {
+
         email: {
             isRequired: {
-                message: "Email обязателен для заполнения"
+                message: "Электронная почта обязателена для заполнения"
             },
             isEmail: {
                 message: "Email введен некорректно"
             }
         },
+
         name: {
             isRequired: {
                 message: "Введите ваше имя"
             }
         }
     };
+
     useEffect(() => {
         validate();
     }, [data]);
@@ -150,8 +153,8 @@ const EditUserPage = () => {
                             <SelectField
                                 label="Выберите свою профессию"
                                 defaultOption="Choose..."
-                                options={professionList}
                                 name="profession"
+                                options={professionList}
                                 onChange={handleChange}
                                 value={data.profession}
                                 error={errors.profession}

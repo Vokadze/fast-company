@@ -1,4 +1,5 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
+
 import userService from "../service/user.service";
 import authService from "../service/auth.service";
 import localStorageService from "../service/localStorage.service";
@@ -31,39 +32,47 @@ const usersSlice = createSlice({
         usersRequested: (state) => {
             state.isLoading = true;
         },
+
         usersReceved: (state, action) => {
             state.entities = action.payload;
             state.dataLoaded = true;
             state.isLoading = false;
         },
+
         usersRequestFiled: (state, action) => {
             state.error = action.payload;
             state.isLoading = false;
         },
+
         authRequestSuccess: (state, action) => {
             state.auth = action.payload;
             state.isLoggedIn = true;
         },
+
         authRequestFailed: (state, action) => {
             state.error = action.payload;
         },
+
         userCreated: (state, action) => {
             if (!Array.isArray(state.entities)) {
                 state.entities = [];
             }
             state.entities.push(action.payload);
         },
+
         userLoggedOut: (state) => {
             state.entities = null;
             state.isLoggedIn = false;
             state.auth = null;
             state.dataLoaded = false;
         },
+
         userUpdateSuccess: (state, action) => {
             state.entities[
                 state.entities.findIndex((u) => u._id === action.payload._id)
             ] = action.payload;
         },
+
         authRequested: (state) => {
             state.error = null;
         }

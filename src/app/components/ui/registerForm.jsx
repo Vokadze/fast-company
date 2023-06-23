@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { validator } from "../../utils/validator";
 import TextField from "../common/form/testField";
@@ -6,7 +7,6 @@ import SelectField from "../common/form/selectField";
 import RadioField from "../common/form/radioField";
 import MultiSelectField from "../common/form/multiSelectField";
 import CheckBoxField from "../common/form/checkBoxField";
-import { useDispatch, useSelector } from "react-redux";
 import { getQualities } from "../../store/qualities";
 import { getProfessions } from "../../store/professions";
 import { signUp } from "../../store/users";
@@ -45,6 +45,7 @@ const RegisterForm = () => {
     };
 
     const validatorConfig = {
+
         email: {
             isRequired: {
                 message: "Электронная почта обязательна для заполнения"
@@ -53,6 +54,7 @@ const RegisterForm = () => {
                 message: "Email введен некорректно"
             }
         },
+
         name: {
             isRequired: {
                 message: "Имя обязательно для заполнения"
@@ -62,6 +64,7 @@ const RegisterForm = () => {
                 value: 3
             }
         },
+
         password: {
             isRequired: { message: "Пароль обязателен для заполнения" },
             isCapitalSymbol: {
@@ -75,6 +78,7 @@ const RegisterForm = () => {
                 value: 8
             }
         },
+
         profession: {
             isRequired: {
                 message: "Обязательно выберите вашу профессию"
@@ -91,11 +95,13 @@ const RegisterForm = () => {
     useEffect(() => {
         validate();
     }, [data]);
+
     const validate = () => {
         const errors = validator(data, validatorConfig);
         setErrors(errors);
         return Object.keys(errors).length === 0;
     };
+
     const isValid = Object.keys(errors).length === 0;
 
     const handleSubmit = (e) => {
@@ -111,6 +117,7 @@ const RegisterForm = () => {
 
     return (
         <form onSubmit={handleSubmit}>
+
             <TextField
                 label="Электронная почта"
                 name="email"
@@ -149,8 +156,7 @@ const RegisterForm = () => {
             <RadioField
                 options={[
                     { name: "Male", value: "male" },
-                    { name: "Female", value: "female" },
-                    { name: "Other", value: "other" }
+                    { name: "Female", value: "female" }
                 ]}
                 value={data.sex}
                 name="sex"

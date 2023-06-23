@@ -14,13 +14,16 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
     };
 
     const returnSortCaret = (selectedSort, currentPath) => {
-        if (selectedSort.path !== currentPath) return false;
+        if (selectedSort.path !== currentPath) return false; // { // return false;
         if (selectedSort.order === "asc") {
             return <i className="bi bi-caret-down-fill"></i>;
         } else {
             return <i className="bi bi-caret-up-fill"></i>;
         }
+        // }
+        // return null;
     };
+
     return (
         <thead>
             <tr>

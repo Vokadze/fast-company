@@ -9,6 +9,7 @@ const LogOut = () => {
         console.log("logout");
         dispatch(logOut());
     }, []);
+
     return <h1>Loading</h1>;
 };
 

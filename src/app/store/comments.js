@@ -1,7 +1,8 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
+import { nanoid } from "nanoid";
+
 import commentService from "../service/comment.service";
 import { getCurrentUserId } from "./users";
-import { nanoid } from "nanoid";
 
 const commentsSlice = createSlice({
     name: "comments",
@@ -10,21 +11,26 @@ const commentsSlice = createSlice({
         isLoading: true,
         error: null
     },
+
     reducers: {
         commentsRequested: (state) => {
             state.isLoading = true;
         },
+
         commentsReceved: (state, action) => {
             state.entities = action.payload;
             state.isLoading = false;
         },
+
         commentsRequestFiled: (state, action) => {
             state.error = action.payload;
             state.isLoading = false;
         },
+
         commentCreated: (state, action) => {
             state.entities.push(action.payload);
         },
+
         commentRemove: (state, action) => {
             state.entities = state.entities.filter(
                 (c) => c._id !== action.payload

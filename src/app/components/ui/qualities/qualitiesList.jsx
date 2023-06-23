@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import Qualitie from "./qualitie";
-import { useDispatch, useSelector } from "react-redux";
 import {
     getQualitiesByIds,
     getQualitiesLoadingStatus,
     loadQualitiesList
 } from "../../../store/qualities";
+import { useDispatch, useSelector } from "react-redux";
 
 const QualitiesList = ({ qualities }) => {
     const dispatch = useDispatch();

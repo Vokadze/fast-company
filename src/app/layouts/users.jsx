@@ -1,12 +1,13 @@
 import React from "react";
 import { useParams, Redirect } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import UserPage from "../components/page/userPage";
 import UsersListPage from "../components/page/userListPage";
 import EditUserPage from "../components/page/editUserPage/editUserPage";
-import { useSelector } from "react-redux";
-import { getCurrentUserId } from "../store/users";
 import UsersLoader from "../components/ui/hoc/usersLoader";
+
+import { getCurrentUserId } from "../store/users";
 
 const Users = () => {
     const params = useParams();

@@ -1,7 +1,8 @@
+import { useState, useEffect } from "react";
+
 import professions from "../mockData/professions.json";
 import qualities from "../mockData/qualities.json";
 import users from "../mockData/users.json";
-import { useState, useEffect } from "react";
 import httpService from "../service/http.service";
 
 const useMockData = () => {
@@ -17,6 +18,8 @@ const useMockData = () => {
     const [progress, setProgress] = useState(0);
     const [count, setCount] = useState(0);
 
+    const summuryCount = professions.length + qualities.length + users.length;
+
     const incrementCount = () => {
         setCount((prevState) => prevState + 1);
     };
@@ -31,6 +34,7 @@ const useMockData = () => {
         if (progress < newProgress) {
             setProgress(() => newProgress);
         }
+
         if (newProgress === 100) {
             setStatus(statusConsts.successed);
         }
@@ -39,8 +43,6 @@ const useMockData = () => {
     useEffect(() => {
         updateProgress();
     }, [count]);
-
-    const summuryCount = professions.length + qualities.length + users.length;
 
     async function initialize() {
         try {

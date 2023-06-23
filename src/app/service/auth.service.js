@@ -17,6 +17,7 @@ const authService = {
         });
         return data;
     },
+
     login: async ({ email, password }) => {
         const { data } = await httpAuth.post("accounts:signInWithPassword", {
             email,
@@ -25,6 +26,7 @@ const authService = {
         });
         return data;
     },
+
     refresh: async () => {
         const { data } = await httpAuth.post("token", {
             grant_type: "refresh_token",

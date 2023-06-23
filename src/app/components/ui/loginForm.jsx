@@ -25,11 +25,13 @@ const LoginForm = () => {
     };
 
     const validatorConfig = {
+
         email: {
             isRequired: {
-                message: "Электронная почта обязательно для заполнения"
+                message: "Электронная почта обязательна для заполнения"
             }
         },
+
         password: {
             isRequired: { message: "Пароль обязателен для заполнения" }
         }

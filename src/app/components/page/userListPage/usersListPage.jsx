@@ -1,34 +1,36 @@
 import React, { useState, useEffect } from "react";
-import _ from "lodash";
 import PropTypes from "prop-types";
+import _ from "lodash";
 
 import { paginate } from "../../../utils/paginate";
 import Pagination from "../../common/pagination";
 import GroupList from "../../common/groupList";
 import SeachStatus from "../../ui/seachStatus";
 import UsersTable from "../../ui/usersTable";
-import { useSelector } from "react-redux";
 import {
     getProfessions,
     getProfessionsLoadingStatus
 } from "../../../store/professions";
+import { useSelector } from "react-redux";
 import { getCurrentUserId, getUsersList } from "../../../store/users";
 
 const UsersListPage = () => {
     const users = useSelector(getUsersList());
     const currentUserId = useSelector(getCurrentUserId());
+
     const professions = useSelector(getProfessions());
     const professionsLoading = useSelector(getProfessionsLoadingStatus());
+
     const [currentPage, setCurrentPage] = useState(1);
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedProf, setSelectedProf] = useState();
-    const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
+    const [sortBy, setSortBy] = useState({ item: "name", order: "asc" }); // iter
 
     const pageSize = 8;
 
     const handleDelete = (userId) => {
         // setUsers(users.filter((user) => user._id !== userId));
-        console.log(userId);
+        console.log("delete user", userId);
     };
 
     const handleToggleBookMark = (id) => {
@@ -65,7 +67,7 @@ const UsersListPage = () => {
         setSortBy(item);
     };
 
-    if (users) {
+    if (users) { // ???????
         function filterUsers(data) {
             const filteredUsers = searchQuery
                 ? data.filter(
@@ -147,8 +149,8 @@ const UsersListPage = () => {
                 </div>
             </div>
         );
-    }
-    return "loading...";
+    } // ?????
+    return "loading..."; // ?????
 };
 
 UsersListPage.propTypes = {

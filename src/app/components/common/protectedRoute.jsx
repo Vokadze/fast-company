@@ -7,6 +7,7 @@ import { getIsLoggedIn } from "../../store/users";
 
 const ProtectedRoute = ({ component: Component, children, ...rest }) => {
     const isLoggedIn = useSelector(getIsLoggedIn());
+
     return (
         <Route
             {...rest}

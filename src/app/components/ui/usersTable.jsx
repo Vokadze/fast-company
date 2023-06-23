@@ -16,6 +16,7 @@ const UsersTable = ({
     ...rest
 }) => {
     const columns = {
+
         name: {
             path: "name",
             name: "Имя",
@@ -23,19 +24,24 @@ const UsersTable = ({
                 <Link to={`/users/${user._id}`}>{user.name}</Link>
             )
         },
+
         qualities: {
             name: "Качества",
             component: (user) => <Qualities qualities={user.qualities} />
         },
+
         professions: {
             name: "Профессия",
             component: (user) => <Profession id={user.profession} />
         },
+
         completedMeetings: {
             path: "completedMeetings",
             name: "Встретился, раз"
         },
+
         rate: { path: "rate", name: "Оценка" },
+
         bookmark: {
             path: "bookmark",
             name: "Избранное",
@@ -47,6 +53,7 @@ const UsersTable = ({
             )
         }
     };
+
     return (
         <Table
             onSort={onSort}

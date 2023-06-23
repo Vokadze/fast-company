@@ -9,6 +9,7 @@ const commentService = {
         );
         return data;
     },
+
     getComments: async (pageId) => {
         const { data } = await httpService.get(commentEndpoint, {
             params: {
@@ -18,6 +19,7 @@ const commentService = {
         });
         return data;
     },
+
     removeComment: async (commentId) => {
         const { data } = await httpService.delete(commentEndpoint + commentId);
         return data;
