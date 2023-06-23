@@ -7,7 +7,6 @@ import { getCurrentUserId, getUserById } from "../../../store/users";
 
 const Comment = ({
     content,
-    // edited_at: edited,
     created_at: created,
     _id: id,
     userId,
