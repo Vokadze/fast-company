@@ -19,6 +19,7 @@ router.patch('/:userId', auth, async (req, res) => {
       res.status(401).json({ message: 'Unauthorized' })
     }
   } catch (e) {
+    console.log(e.message)
     res.status(500).json({
       message: 'На сервере произошла ошибка. Попробуйте позже',
     })

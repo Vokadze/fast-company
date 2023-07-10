@@ -3,8 +3,8 @@ import { toast } from "react-toastify";
 
 import configFile from "../config.json";
 
-import localStorageService from "./localStorage.service";
 import authService from "./auth.service";
+import localStorageService from "./localStorage.service";
 
 const http = axios.create({
     baseURL: configFile.apiEndpoint
