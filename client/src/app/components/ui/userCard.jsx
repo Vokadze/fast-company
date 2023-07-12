@@ -18,7 +18,6 @@ const UserCard = ({ user }) => {
         <div className="card mb-3">
             <div className="card-body">
                 {currentUserId === user._id && (
-
                     <button
                         className="position-absolute top-0 end-0 btn btn-light btn-sm"
                         onClick={handleClick}

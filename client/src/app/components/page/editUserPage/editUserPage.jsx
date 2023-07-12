@@ -89,7 +89,6 @@ const EditUserPage = () => {
     }, [data]);
 
     const validatorConfig = {
-
         email: {
             isRequired: {
                 message: "Электронная почта обязателена для заполнения"
