@@ -45,7 +45,6 @@ const RegisterForm = () => {
     };
 
     const validatorConfig = {
-
         email: {
             isRequired: {
                 message: "Электронная почта обязательна для заполнения"
@@ -117,7 +116,6 @@ const RegisterForm = () => {
 
     return (
         <form onSubmit={handleSubmit}>
-
             <TextField
                 label="Электронная почта"
                 name="email"

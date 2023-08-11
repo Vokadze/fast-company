@@ -25,7 +25,6 @@ const LoginForm = () => {
     };
 
     const validatorConfig = {
-
         email: {
             isRequired: {
                 message: "Электронная почта обязательна для заполнения"

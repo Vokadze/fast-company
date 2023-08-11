@@ -27,8 +27,9 @@ const MultiSelectField = ({
                 closeMenuOnSelect={false}
                 defaultValue={defaultValue}
                 options={optionsArray}
-                className={`basic-multi-select form-control Multiselect ${error ? "is-invalid" : ""
-                    }`}
+                className={`basic-multi-select form-control Multiselect ${
+                    error ? "is-invalid" : ""
+                }`}
                 classNamePrefix="select"
                 onChange={handleChange}
                 name={name}
